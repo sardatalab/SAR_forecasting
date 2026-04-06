@@ -67,7 +67,7 @@ forvalues a = `second' / `end' {
 * Profiles
 forvalues i = `init' / `end' {
 	
-	local categories new_poor215 always_poor215 new_poor365 always_poor365 new_poor685 always_poor685 new_nonpoor always_nonpoor total
+	local categories new_poor${pline1} always_poor${pline1} new_poor${pline2} always_poor${pline2} new_poor${pline3} always_poor${pline3} new_nonpoor always_nonpoor total
 	foreach kind of local categories {
 				
 		qui gen pop_`kind'`i' = 1 if `kind'`i' == 1

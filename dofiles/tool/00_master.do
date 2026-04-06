@@ -28,18 +28,18 @@ set timeout2 400, perm
 * Modifiable globals
 
 ** Dates
-gl version 		"Mar-13-2025"
-gl inflows 		"Seriestableview_3_13_2025"	//	Remittances file name, structure "Seriestableview_D_MM_YYYY"
-gl date_inflows "Mar-13-2025"					//	Remittances file download date
+gl version 		"Apr-6-2026"
+gl inflows 		"Seriestableview_4_6_2026"	//	Remittances file name, structure "Seriestableview_D_MM_YYYY"
+gl date_inflows "Apr-6-2026"					//	Remittances file download date
 
 ** Paths
 gl path 		"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
 gl dofiles 		"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\Regional model\SAR_forecasting\dofiles\tool"
-gl mpo_version 	"${path}\SM2025" // Folder name
+gl mpo_version 	"${path}\SM2026" // Folder name
 gl downloads	"C:\Users\wb520054\Downloads"		// Your downloads folder for retrieving remittances file
 
 * Stable globals - Should not be changed
-gl cpi_version 	12
+gl cpi_version 	14
 gl cpi_base		2021
 gl povmod 		"\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\Central Team\MFM-allvintages.dta"
 gl input_master "input_MASTER.xlsx"							// Excel file read by regional tool
@@ -71,9 +71,9 @@ gl quarters "q01 q02 q03 q04"
 
 
 * Set up Elasticities - Countries to include and their RESPECTIVE year restriction
-gl countries 	"BGD 	LKA"  
-gl min_year 	"2000 	2006"
-gl last_year 	"2022 	2019"
+gl countries 	"BGD 	LKA		MDV"  
+gl min_year 	"2000 	2006	2009"
+gl last_year 	"2022 	2019	2019"
 /*
 gl countries 	"AFG 	BGD 	BTN 	IND 	MDV 	NPL 	PAK 	LKA"  
 gl min_year 	"2013 	2000 	2003 	2004 	2002 	1995 	2004 	2006"
@@ -97,7 +97,7 @@ gl last_year 	"2019 	2022 	2022 	2011 	2019 	2022 	2018 	2019"
 	*run "$dofiles\04_merge_inputs_labor"
 	
 * 5. elasticities
-	*run "$dofiles\05_elasticities"
+	run "$dofiles\05_elasticities"
 	
 * 6. GDP and Population
 	run "$dofiles\06_inputs_macro" 

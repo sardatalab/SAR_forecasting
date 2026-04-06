@@ -46,6 +46,27 @@ forvalues i = 1/`col_years' {
 		qui cap ren wgt fexp_s
 		qui cap ren weight fexp_s
 		
+		* deflate welfare // Needs to be fixed in SARMD and dlw
+		if "${country}`year'" == "BGD2022" {
+
+			/*sum   zu_cbn [aw=fexp_s] 
+			local mean_nat = r(mean)
+			
+			sum   welfare [aw=fexp_s] 
+			local avg = r(mean)
+
+			gen welfare_adj = welfare*`mean_nat'/zu_cbn
+			sum welfare_adj [aw=fexp_s] 
+			local avg2 = r(mean)
+			replace welfare = welfare_adj*`avg'/`avg2'
+			drop welfare_adj*/
+			
+			replace welfare = welfaredef
+			
+			replace pline_nat = pline_nat * (welfaredef / welfarenat)
+		
+		}
+		
 		* Preparing variables
 		keep countrycode year hhid pid fexp_s welfare male urban age relationharm educat7 hsize ipcf itf ip inp ila icap ijubi inla_otro itranp itrane renta_imp itranext_m itranext_nm itranint_m itranint_nm itran_ns cpi${ppp} icp${ppp} hogarsec empstat* lstatus* occup* industry* pline_nat
 		
@@ -72,6 +93,7 @@ forvalues i = 1/`col_years' {
 		foreach incomevar of varlist welfare ila ijubi itranp itrane icap inla_otro renta_imp ipcf itf ip inp itranext_m itranext_nm itranint_m itranint_nm itran_ns {
 			cap drop `incomevar'_ppp
 			qui gen `incomevar'_ppp=`incomevar' / cpi${ppp} / icp${ppp} 
+			replace `incomevar'_ppp = `incomevar'_ppp / 12
 			}
 			
 		* Foreign remittances
@@ -205,7 +227,7 @@ forvalues i = 1/`col_years' {
 		* Preparing variables
 		cap drop year
 		qui gen year = `year'
-		keep countrycode year hhid pid fexp_* sample welfare_* male urban age relationharm educat7 h_size depen active* emplyd_s pc_inc_* poor*1 occupation_* lai_m_s lai_s_s tot_lai_* h_transfers* h_*remit* h_pensions* h_otherinla* h_capital* h_renta_imp* labor_rel salaried_s self_emp unpaid unskilled_s skilled_s pline_nat
+		keep countrycode year hhid pid fexp_* sample welfare_* male urban age relationharm educat7 h_size depen active* emplyd_s pc_inc_* poor*1 occupation_* lai_m_s lai_s_s tot_lai_* h_transfers* h_*remit* h_pensions* h_otherinla* h_capital* h_renta_imp* labor_rel salaried_s self_emp unpaid unskilled_s skilled_s pline_nat cpi${ppp} icp${ppp}
 		
 		cap keep if welfare_s!=.
 		

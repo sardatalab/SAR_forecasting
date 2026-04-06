@@ -140,7 +140,7 @@ erase "${downloads}/${inflows}.csv"
 
 import delimited "${path_mpo}/${inflows}.csv", varnames(nonames) stringcols(_all) clear
 
-forval j = 3/50 {
+forval j = 3/51 {
 	rename v`j' `= "y_" + v`j'[1]'
 }
 

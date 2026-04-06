@@ -32,7 +32,8 @@ foreach country of global countries_hhss { // Open loop countries
 		
 		if !inlist("`country'`year'","AFG2016","AFG2019") /// AFG2007 AFG2011 AFG2013
 		 & !inlist("`country'`year'","BGD2005","BGD2010","BGD2016","BGD2022") /// BGD2000  & !inlist("`country'`year'","BTN2022") /// BTN2003 BTN2007 BTN2012 BTN2017 & !inlist("`country'`year'","IND2004","IND2009","IND2011") /// 
-		 & !inlist("`country'`year'","MDV2019") /// MDV2002 MDV2009 MDV2016 & !inlist("`country'`year'","NPL2010") /// NPL2003 NPL2022 
+		 & !inlist("`country'`year'","MDV2009","MDV2016","MDV2019") /// MDV2002 MDV2009 MDV2016 
+		 & !inlist("`country'`year'","NPL2022") /// NPL2003 NPL2010
 		 & !inlist("`country'`year'","PAK2018") /// PAK2004 PAK2005 PAK2007 PAK2010 PAK2011 PAK2013 PAK2015
 		 & !inlist("`country'`year'","LKA2006","LKA2009","LKA2012","LKA2016","LKA2019") /// LKA2002
 		 continue
@@ -54,11 +55,13 @@ foreach country of global countries_hhss { // Open loop countries
 		
 		
 		* SARMD modules - IND LBR INC
-		local modules "IND LBR"
+		local modules "IND LBR INC"
 		foreach m of local modules {
-			cap dlw, count("`country'") y(`year') t(sarmd) mod(`m') clear 
+			if "`country'" == "MDV" cap dlw, count("`country'") y(`year') t(sarmd) mod(`m') verm(02) vera(01) clear 
+			else cap dlw, count("`country'") y(`year') t(sarmd) mod(`m') clear 
 			if !_rc {
 				di in red "Module `m' for `country' `year' loaded in datalibweb"
+				cap drop __000000 // NPL INC has this variable and it's creating issues with the merge
 				tempfile `m'
 				save ``m'', replace
 			}
@@ -68,17 +71,53 @@ foreach country of global countries_hhss { // Open loop countries
 			}		
 		}
 		
+		/*if "`country'`year'" == "BGD2022" {
+			cap dlw, count("`country'") y(`year') t(sarmd) mod(INC) clear 
+			di in red "Module `m' for `country' `year' loaded in datalibweb"
+			tempfile INC
+			save `INC', replace
+			
+		}*/
+		
 		
 		* Merge
 		use `IND'
 		merge 1:1 hhid pid using `LBR', nogen keep(1 3)
-		*merge 1:1 hhid pid using `INC', nogen keep(1 3)
+		cap tostring idp_org if "`country'`year'" == "MDV2019"
+		/*if "`country'`year'" == "BGD2022"*/ merge 1:1 hhid pid using `INC', nogen keep(1 3)
 		merge m:1 countrycode year using `dlwcpi', nogen keep(1 3)
 
 		
 		* Defining population of reference 
 		cap drop sample
 		qui gen sample = age > 14 & age != .
+		
+		/* Spatial deflation fo wage in BGD 2022 // This is temporary
+		
+		if "`country'`year'" == "BGD2022" {
+
+			sum   zu_cbn [aw=wgt] 
+			local mean_nat = r(mean)
+			
+			sum   wage [aw=wgt] 
+			local avg = r(mean)
+
+			gen wage_adj = wage*`mean_nat'/zu_cbn
+			sum wage_adj [aw=wgt] 
+			local avg2 = r(mean)
+			replace wage = wage_adj*`avg'/`avg2'
+			drop wage_adj
+		
+		}*/
+		
+		if "`country'`year'" == "NPL2022" { // Needs adjustment in the harmonizaton
+
+			cap drop lstatus
+			gen lstatus = 1 if q09_02 == 1 | q09_03 == 1 | q09_04 == 1 | q09_05 == 1 | q09_07 == 1 
+			replace lstatus = 2 if (q09_18 == 1 & inrange(q09_20,1,11)) | (q09_19 == 1 & inlist(q09_22,1,2)) 
+			replace  lstatus  = 3 if (q09_18 == 1 & !inrange(q09_20,1,11)) | (q09_18 == 2 & (q09_19 == 2 | (q09_19 == 1 & !inlist(q09_22,1,2))))
+		
+		}
 
 		
 		* Skill/Unskilled classification
@@ -86,7 +125,7 @@ foreach country of global countries_hhss { // Open loop countries
 		/*Following the ILO skill level classification[1], we classify workers into high-skilled and low-skilled. Workers in occupations such as Managers (1), Professionals (2), and Technicians and Associate professionals (3) correspond to "High-skilled" workers, whilst workers in Elementary Occupations (9) are "low-skilled." Given the diverse nature of the intermediate categories of this classification (Clerical support (4), Service and Sales (6), Skilled Agricultural, Forestry and Fisheries (6), Craft and Related Trades (7), and Plant and Machine Operators, and Assembler (8)), we added a layer to the high/low skill classification by using educational attainment and considering those with complete secondary and above as "high-skilled", and "low-skilled" otherwise. This is regardless of the workers' economic activity sector (agriculture, industry, services). Armed forces are excluded from the microsimulation model and, hence, from this classification. The table below summarizes the skill-level classification used.*/
 		cap rename  lstatus_year lstatus_year_orig
 		gen     lstatus_year = lstatus
-		replace lstatus_year = 1 if  !inlist(wage,0,.)
+		replace lstatus_year = 1 if  !inlist(ip,0,.) & "`country'`year'" == "BGD2022"
 		
 		cap rename occup_year occup_year_orig
 		qui sum occup_year_orig
@@ -124,7 +163,9 @@ foreach country of global countries_hhss { // Open loop countries
 		
 
 		* Labor income - skilled/unskilled by sector and total
-		qui gen ip_ppp = wage / cpi${cpi_base} / icp${cpi_base} // Labor income main activity ppp
+		if inlist("`country'","BGD","NPL") qui gen ip_ppp = (ip/12) / cpi${cpi_base} / icp${cpi_base} // Labor income main activity ppp
+		else 					qui gen ip_ppp = ip / cpi${cpi_base} / icp${cpi_base} 
+		
 		for any 1 2 3: qui gen ip_sk_X 	 = ip_ppp if sample == 1 & lstatus_year == 1 & sector_3 == X & sk == 1
 		for any 1 2 3: qui gen ip_unsk_X = ip_ppp if sample == 1 & lstatus_year == 1 & sector_3 == X & sk == 0
 		qui gen ip_total = ip_ppp if sample == 1 & lstatus_year == 1 

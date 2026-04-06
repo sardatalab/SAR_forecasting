@@ -28,22 +28,23 @@ etime, start
 
 
 * Paths
-gl path "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\SM2025"
-gl data_path "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\SM2025"
+gl path "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\SM2026"
+gl data_path "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\SM2026"
+gl thedo     "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\Regional model\SAR_forecasting\dofiles\results"	// Do-files path
 gl avail_data "${path}\_inputs\Data availability by country.xlsx"
 gl povmod 	  "\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\Central Team\MFM-allvintages.dta"
 
 * Other globals 
 gl country 		"BGD" 	// AFG BGD BTN IND MDV NPL PAK LKA
-gl cpi_version 	12
+gl cpi_version 	14
 gl min_sim_year 2023 	// Please check this twice - Dynamic stats
-gl ppp 			2017	// Change for "yes" / "no" depending on the version
+gl ppp 			2021	// Change for "yes" / "no" depending on the version
 
 * Poverty and vulnerability thresholds - Change if necessary multiplying the original value by 100
-gl pline1 /*190*/ 215
-gl pline2 /*320*/ 365
-gl pline3 /*550*/ 685
-gl prs_gp /*nnn*/ 25
+gl pline1 /*190 215*/ 300
+gl pline2 /*320 365*/ 420
+gl pline3 /*550 685*/ 830
+gl prs_gp /*nnn 25*/ 28
 
 
 /*==============================================================================================
@@ -65,13 +66,13 @@ mkmat B-G, mat(data)
 gl country_path "${path}/${country}"
 gl outfile "${country_path}\Results_${country}.xlsm"
 
-run "01_data.do"
-run "02_variables.do"
-run "03_static_profiles.do"
-run "04_gics.do"
-run "05_transition_matrix.do"
-run "06_dynamic_profiles.do"
-run "07_pop_wdi.do"
+run "${thedo}\01_data.do"
+run "${thedo}\02_variables.do"
+run "${thedo}\03_static_profiles.do"
+run "${thedo}\04_gics.do"
+run "${thedo}\05_transition_matrix.do"
+run "${thedo}\06_dynamic_profiles.do"
+run "${thedo}\07_pop_wdi.do"
 
 * Display running time	
 etime

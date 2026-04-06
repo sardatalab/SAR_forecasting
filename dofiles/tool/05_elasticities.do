@@ -7,7 +7,7 @@ Author:				Kelly Y. Montoya (kmontoyamunoz@worldbank.org)
 Creation Date:		02/25/2022
 
 Last Modification:	Kelly Y. Montoya (kmontoyamunoz@worldbank.org)
-Modification date:  01/21/2025 
+Modification date:  02/23/2026 
 ===================================================================================================*/
 
 drop _all
@@ -335,7 +335,7 @@ forvalues i = 1/`n' {
 	* 2.1.5 - Median regression
 	===================================================================================================*/
 	
-	if !inlist("`country'","BGD","LKA") {
+	if !inlist("`country'","BGD","LKA", "MDV") {
 		
 		* GDP-Activity
 		*****************

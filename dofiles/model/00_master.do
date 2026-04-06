@@ -33,18 +33,18 @@ set more off
 
 * Globals for general paths
 gl priv_path 	"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
-gl path  		"$priv_path\SM2025"
+gl path  		"$priv_path\SM2026"
 gl thedo    	"$priv_path\Regional model\SAR_forecasting\dofiles\model"	// Do-files path
 
 * Globals for country-year identification
-gl cpi_version 	12
-gl ppp 			2017	// Change for "yes" / "no" depending on the version
+gl cpi_version 	14
+gl ppp 			2021	// Change for "yes" / "no" depending on the version
 gl country 		"BGD" 	// Country to upload
 gl year 		2022	// Year to upload - Base year dataset
-gl final_year 	2027	// Change for last simulated year
+gl final_year 	2028	// Change for last simulated year
 
 * Globals for country-specific paths
-gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_2020.xlsm" // Country's input Excel file
+gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}.xlsm" // Country's input Excel file
 cap mkdir 	"${path}/${country}\Data"
 gl data_out "${path}/${country}\Data"
 
@@ -73,6 +73,7 @@ save `dlwcpi', replace
 * SARMD modules - IND LBR INC
 local modules "IND LBR INC"
 foreach m of local modules {
+	
 	di in red "`m'"
 	if "${country}" == "BGD" & ${year} == 2016 & "`m'" == "IND" dlw, count("${country}") y(${year}) t(sarmd) mod(`m') filename(BGD_2016_HIES_v01_M_v07_A_SARMD_IND.dta) clear nocpi
 	else if "${country}" == "LKA" & inlist(${year},2009,2012) & "`m'" == "IND" dlw, count("${country}") y(${year}) t(sarmd) mod(`m') filename(LKA_${year}_HIES_v01_M_v06_A_SARMD_IND.dta) clear nocpi
@@ -83,7 +84,7 @@ foreach m of local modules {
 		
 * Merge
 use `IND'
-merge 1:1 hhid pid using `LBR', nogen keep(1 3)
+merge 1:1 hhid pid using `LBR', nogen keep(1 3) force
 merge 1:1 hhid pid using `INC', nogen keep(1 3)
 merge m:1 countrycode year using `dlwcpi', nogen keep(1 3)
 
@@ -148,7 +149,7 @@ ineqdec0 welfare_s [aw = fexp_s]
 gen pline_nat_ppp = pline_nat / cpi$ppp / icp$ppp
 apoverty welfare_s [aw = fexp_s] if welfare_s != ., varpl(pline_nat_ppp) h igr gen(poor_nat)
 
-apoverty welfare_base [aw = fexp_s] if welfare_base != ., varpl(pline_nat_ppp) h igr gen(poor_nat_base)
+apoverty welfare_base [aw = fexp_base] if welfare_base != ., varpl(pline_nat_ppp) h igr gen(poor_nat_base)
 
 /*===================================================================================================
 	- Display running time

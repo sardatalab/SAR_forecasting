@@ -76,11 +76,18 @@ if $ppp == 2011 {
 	gen pl3 = 5.5 * time_factor
 }
 
-else {
+else if $ppp == 2017 {
 	
 	gen pl1 = 2.15 * time_factor
 	gen pl2 = 3.65 * time_factor
 	gen pl3 = 6.85 * time_factor
+}
+
+else if $ppp == 2021 {
+	
+	gen pl1 = 3.0 * time_factor
+	gen pl2 = 4.2 * time_factor
+	gen pl3 = 8.3 * time_factor
 }
 
 * Poverty rates
