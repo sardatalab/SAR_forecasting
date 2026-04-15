@@ -28,9 +28,9 @@ set timeout2 400, perm
 * Modifiable globals
 
 ** Dates
-gl version 		"Apr-6-2026"
-gl inflows 		"Seriestableview_4_6_2026"	//	Remittances file name, structure "Seriestableview_D_MM_YYYY"
-gl date_inflows "Apr-6-2026"					//	Remittances file download date
+gl version 		"Apr-8-2026"
+gl inflows 		"Seriestableview_4_8_2026"	//	Remittances file name, structure "Seriestableview_D_MM_YYYY"
+gl date_inflows "Apr-8-2026"					//	Remittances file download date
 
 ** Paths
 gl path 		"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"

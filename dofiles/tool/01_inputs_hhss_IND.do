@@ -53,7 +53,7 @@ cd "$path"
 	1.2 - Estimations
 ===========================================================================================*/
 
-use "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\SM2026\IND\IND_allyears_PLFS_V1_final_v01_M_cpi_microsim.dta" , clear
+use "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\SM2026\IND\inputs\IND_allyears_PLFS_V1_final_v01_M_cpi_microsim.dta" , clear
 
 loc country "IND"
 
