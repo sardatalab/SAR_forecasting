@@ -10,7 +10,8 @@ qui gen pctile_urban = .
 qui gen pctile_rural = .
 
 loc init = data[1,1]
-loc end = `init' + 5
+if `init' <= ${min_sim_year} loc init = ${min_sim_year} + 1
+loc end = data[1,1] + 5
 
 forvalues a = `init' / `end' {
 	qui xtile pctile_`a' = welfare_s [w=fexp_s] if year == `a', nq(100)

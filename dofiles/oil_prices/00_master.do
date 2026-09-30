@@ -19,23 +19,25 @@ version 17.0
 /*=================================================================================================*/
 
 * Globals for paths
-gl path 			"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\SM2026"
-gl data 			"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\SM2026"
+gl microsims_dir	"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
+gl path 			"${microsims_dir}\AM2026"
+gl data_baseline	"${microsims_dir}\1_ST_working_folder\SM2026"
+gl data_conflict	"${microsims_dir}\1_ST_working_folder\AM2026"
 gl food_share 		"${path}\food_vectors_SAR"
-gl dos 				"${path}\Oil prices\dofiles"
+gl dos 				"${microsims_dir}\0_SAR_forecasting\dofiles\oil_prices"
 gl input_baseline 	"${path}\Oil prices\input\compiled_baseline_MPOweights"
-gl input_conflict 	"${path}\Oil prices\input\compiled_SM2026_MPOweights"
+gl input_conflict 	"${path}\Oil prices\input\compiled_2026conflict_MPOweights"
 
 
 * Other globals
-gl version 		"JUN_12_2026"
-gl countries 	"BGD BTN MDV NPL LKA IND"
+gl version 		"SEP_29_2026"
+gl countries 	"BGD MDV NPL IND" // LKA doesn't have a baseline for now since we moved to S2S, and BTN model is yet to be defined
 gl v_oil = ((94/78.58)-1)*100 // Projected growth in oil prices for Q1 and Q2 of 2026 in Feb report (56.14), for March (78.58) and projected new price from Global assumptions (94). - https://www.eia.gov/outlooks/steo/report/us_oil.php, consulted on 03-17-2026, macro updated on 03-24-2026.
 gl out_sim "${path}\Oil prices\output\compiled_sim_${version}"
 gl out "${path}\Oil prices\output\SAR_Iran_conflict_${version}.xlsx"
 gl out_mat "${path}\Oil prices\output\deco_matrix.xlsx"
 
-cd "${path}\Oil prices\dofiles"
+cd "${dos}"
 
 
 /*=================================================================================================*/
@@ -58,4 +60,4 @@ cd "${path}\Oil prices\dofiles"
 	run "05_shapley_adecomp.do"
 	
 * 6. Profiles
-	*run "06_profiles.do"
+	*run "06_profiles.do" // Not finished

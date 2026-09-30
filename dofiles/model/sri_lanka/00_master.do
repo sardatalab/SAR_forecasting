@@ -8,7 +8,7 @@ E-mail:				solivieri@worldbank.org; kmontoyamunoz@worldbank.org
 Creation Date:		11/4/2024
 
 Last Modification:	Kelly Y. Montoya (kmontoyamunoz@worldbank.org)
-Modification date:  3/14/2025
+Modification date:  8/31/2026
 ===================================================================================================*/
 
 version 17.0
@@ -33,20 +33,20 @@ set more off
 
 * Globals for general paths
 loc ppath   = 1
-if `ppath' == 1 gl priv_path 	"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
-else            gl priv_path 	"C:\Users\wb316966\WBG\Kelly Yelitza Montoya Munoz - Microsimulations"
-gl path  		"$priv_path\SM2026"
-gl thedo    	"$priv_path\Regional model\SAR_forecasting\dofiles\model\sri_lanka"	// Do-files path
+if `ppath' == 1 gl priv_path 	"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
+else            gl priv_path 	"C:\Users\wb316966\WBG\SARDATALAB - Documents\Microsimulations"
+gl path  		"$priv_path\1_ST_working_folder\AM2026"
+gl thedo    	"$priv_path\0_SAR_forecasting\dofiles\model\sri_lanka"	// Do-files path
 
 * Globals for country-year identification
 gl cpi_version 	15
 gl ppp 			2021	// Change for "yes" / "no" depending on the version
 gl country 		"LKA" 	// Country to upload
-gl year 		2019	// Year to upload - Base year dataset
+gl year 		2024	// Year to upload - Base year dataset
 gl final_year 	2028	// Change for last simulated year
 
 * Globals for country-specific paths
-gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_conflict_HIES.xlsm" // Country's input Excel file
+gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_LFS_Imputed.xlsm" // Country's input Excel file
 cap mkdir 	"${path}/${country}\Data"
 gl data_out "${path}/${country}\Data"
 
@@ -59,39 +59,52 @@ gl rn_int_remitt 	"yes" 	// Change for "yes" or "no" (neutral distribution) on m
 gl rn_dom_remitt 	"yes" 	// Change for "yes" or "no" (neutral distribution) on modelling domestic remittances
 gl cons_re_scale 	"no" 	// Change for "yes"/"no" re-scale final consumption using private consumption
 
-
+*Originally was yes inc no cons
 /*===================================================================================================
 	2 - DATA UPLOAD
 ===================================================================================================*/
 
 * Support module - CPIs and PPPs
-dlw, country(Support) year(2005) type(GMDRAW) surveyid(Support_2005_CPI_v${cpi_version}_M) filename(Final_CPI_PPP_to_be_used.dta)
+	dlw, country(Support) year(2005) type(GMDRAW) surveyid(Support_2005_CPI_v${cpi_version}_M) filename(Final_CPI_PPP_to_be_used.dta)
 
-keep if code == "${country}" & year == ${year}
-keep code year cpi${ppp} icp${ppp}
-rename code countrycode
-tempfile dlwcpi
-save `dlwcpi', replace
+	if inrange(${year},2020,2025) keep if code == "${country}" & year == 2019 // Imputed years are at 2019 prices
+	else keep if code == "${country}" & year == ${year}
+
+	keep code year cpi${ppp} icp${ppp}
+	rename code countrycode
+	tempfile dlwcpi
+	save `dlwcpi', replace
+
+* Microdata if imputed (2020-2025)
+	if inrange(${year},2020,2025) {
 		
-* SARMD modules - IND LBR INC
-local modules "IND LBR INC"
-foreach m of local modules {
-	
-	di in red "`m'"
-	if "${country}" == "BGD" & ${year} == 2016 & "`m'" == "IND" dlw, count("${country}") y(${year}) t(sarmd) mod(`m') filename(BGD_2016_HIES_v01_M_v07_A_SARMD_IND.dta) clear nocpi
-	else if "${country}" == "LKA" & inlist(${year},2009,2012) & "`m'" == "IND" dlw, count("${country}") y(${year})
-	else if "${country}" == "LKA" & inlist(${year},2019) & "`m'" == "IND" dlw, count("${country}") y(${year})t(sarmd) mod(`m') filename(LKA_${year}_HIES_v01_M_v03_A_SARMD_IND.dta) clear nocpi
-	else dlw, count("${country}") y(${year}) t(sarmd) mod(`m') clear nocpi
-	tempfile `m'
-	save ``m'', replace	
-}
-		
-* Merge
-use `IND'
-merge 1:1 hhid pid using `LBR', nogen keep(1 3) force
-merge 1:1 hhid pid using `INC', nogen keep(1 3)
-merge m:1 countrycode year using `dlwcpi', nogen keep(1 3)
-merge m:1 district using "$priv_path\SM2026\LKA\cash_transfers\spatial_priceindex.dta", nogen
+		use "${path}/${country}\other\LKA_${year}_LFS_v01_M_v01_A.dta", clear
+		merge m:1 countrycode using `dlwcpi', nogen keep(1 3)
+		merge m:1 district using "${path}/${country}\other\spatial_priceindex.dta", nogen
+			
+	}
+
+* Microdata if actual data
+	else { 
+		* SARMD modules - IND LBR INC
+		local modules "IND LBR INC"
+		foreach m of local modules {
+				
+			di in red "`m'"
+			if inlist(${year},2009,2012) & "`m'" == "IND" dlw, count("${country}") y(${year})
+			else if inlist(${year},2019) & "`m'" == "IND" dlw, count("${country}") y(${year})t(sarmd) mod(`m') filename(LKA_${year}_HIES_v01_M_v03_A_SARMD_IND.dta) clear nocpi
+			else dlw, count("${country}") y(${year}) t(sarmd) mod(`m') clear nocpi
+			tempfile `m'
+			save ``m'', replace	
+		}
+					
+		* Merge
+		use `IND'
+		merge 1:1 hhid pid using `LBR', nogen keep(1 3) force
+		merge 1:1 hhid pid using `INC', nogen keep(1 3)
+		merge m:1 countrycode year using `dlwcpi', nogen keep(1 3)
+		merge m:1 district using "$priv_path\SM2026\LKA\cash_transfers\spatial_priceindex.dta", nogen
+	}
 
 
 /*===================================================================================================
@@ -179,6 +192,25 @@ if ${model} == 2024 {
 	compress 
 	if "$cons_re_scale" == "yes" save "$priv_path\SM2026\LKA\nonlabor_inc_2024_cons.dta", replace
 	if "$inc_re_scale" == "yes" save "$priv_path\SM2026\LKA\nonlabor_inc_2024_gdp.dta", replace
+	
+	** Additional step requested by Jaime - Add food share vector
+	if "$cons_re_scale" == "yes" {
+		use "$priv_path\SM2026\LKA\nonlabor_inc_2024_cons.dta", clear
+		merge 1:m hhid using "$priv_path\SM2026\food_vectors_SAR\LKA_food_share.dta", keepusing(share_food) nogen
+		duplicates drop
+		
+		compress
+		save "$priv_path\SM2026\LKA\nonlabor_inc_2024_cons.dta", replace
+	}
+	
+	if "$inc_re_scale" == "yes" {
+		use "$priv_path\SM2026\LKA\nonlabor_inc_2024_gdp.dta", clear
+		merge 1:m hhid using "$priv_path\SM2026\food_vectors_SAR\LKA_food_share.dta", keepusing(share_food) nogen
+		duplicates drop 
+		
+		compress 
+		save "$priv_path\SM2026\LKA\nonlabor_inc_2024_gdp.dta", replace
+	}
 } 
 
 

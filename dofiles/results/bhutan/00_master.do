@@ -28,9 +28,9 @@ etime, start
 
 
 * Paths
-gl path "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\SM2026"
-gl data_path "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\SM2026"
-gl thedo     "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\Regional model\SAR_forecasting\dofiles\results\bhutan"	// Do-files path
+gl path "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\AM2026"
+gl data_path "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\1_ST_working_folder\AM2026"
+gl thedo     "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\0_SAR_forecasting\dofiles\results\bhutan"	// Do-files path
 gl avail_data "${path}\_inputs\Data availability by country.xlsx"
 gl povmod 	  "\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\Central Team\MFM-allvintages.dta"
 
@@ -64,7 +64,9 @@ mkmat B-G, mat(data)
 
 * Output file
 gl country_path "${path}/${country}"
-gl outfile "${country_path}\Results_${country}_conflict.xlsm"
+gl outfile "${country_path}\Results_${country}.xlsm"
+
+copy "${path}\_inputs\Results_${country}.xlsm" "${country_path}\Results_${country}.xlsm", replace
 
 run "${thedo}\01_data.do"
 run "${thedo}\02_variables.do"

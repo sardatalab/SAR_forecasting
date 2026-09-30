@@ -33,20 +33,20 @@ set more off
 
 * Globals for general paths
 loc ppath   = 1
-if `ppath' == 1 gl priv_path 	"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
+if `ppath' == 1 gl priv_path 	"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
 else            gl priv_path 	"C:\Users\wb316966\WBG\Kelly Yelitza Montoya Munoz - Microsimulations"
-gl path  		"$priv_path\SM2026"
-gl thedo    	"$priv_path\Regional model\SAR_forecasting\dofiles\model\bhutan"	// Do-files path
+gl path  		"$priv_path\1_ST_working_folder\AM2026"
+gl thedo    	"$priv_path\0_SAR_forecasting\dofiles\model\bhutan"	// Do-files path
 
 * Globals for country-year identification
 gl cpi_version 	15
 gl ppp 			2021	// Change for "yes" / "no" depending on the version
 gl country 		"BTN" 	// Country to upload
-gl year 		2022	// Year to upload - Base year dataset
+gl year 		2025	// Year to upload - Base year dataset
 gl final_year 	2028	// Change for last simulated year
 
 * Globals for country-specific paths
-gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_conflict.xlsm" // Country's input Excel file
+gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_2025.xlsm" // Country's input Excel file
 cap mkdir 	"${path}/${country}\Data"
 gl data_out "${path}/${country}\Data"
 
@@ -65,10 +65,9 @@ gl cons_re_scale 	"yes" 	// Change for "yes"/"no" re-scale final consumption usi
 ===================================================================================================*/
 
 * Support module - CPIs and PPPs
-dlw, country(Support) year(2005) type(GMDRAW) surveyid(Support_2005_CPI_v15_M) filename(Final_CPI_PPP_to_be_used.dta)
-
 dlw, country(Support) year(2005) type(GMDRAW) surveyid(Support_2005_CPI_v${cpi_version}_M) filename(Final_CPI_PPP_to_be_used.dta)
-keep if code == "${country}" & year == ${year}
+if ${year} == 2022 keep if code == "${country}" & year == ${year}
+if ${year} != 2022 keep if code == "${country}" & year == 2022
 keep code year cpi${ppp} icp${ppp}
 rename code countrycode
 tempfile dlwcpi
@@ -82,7 +81,7 @@ save `S2S', replace
 		
 * Merge
 use `S2S', clear
-merge m:1 countrycode year using `dlwcpi', nogen keep(1 3)
+merge m:1 countrycode using `dlwcpi', nogen keep(1 3)
 
 
 /*===================================================================================================

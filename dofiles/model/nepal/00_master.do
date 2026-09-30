@@ -17,6 +17,7 @@ cap ssc install etime
 cap ssc install apoverty
 cap ssc install ainequal
 cap ssc install ainequal0
+cap ssc install ineqdec0
 etime, start
 
 
@@ -32,12 +33,14 @@ set more off
 * NOTE: YOU ONLY NEED TO CHANGE THESE OPTIONS
 
 * Globals for general paths
-loc ppath   = 1
+loc ppath   = 5
 if `ppath' == 1 gl priv_path 	"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
-else            gl priv_path 	"C:\Users\wb316966\WBG\Kelly Yelitza Montoya Munoz - Microsimulations"
+else if `ppath' == 2  gl priv_path 	"C:\Users\wb316966\WBG\Kelly Yelitza Montoya Munoz - Microsimulations"
+else            gl priv_path 	"C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations"
 
-gl path  		"$priv_path\SM2026"
-gl thedo    	"$priv_path\Regional model\SAR_forecasting\dofiles\model\nepal"	// Do-files path
+
+gl path  		"$priv_path\1_ST_working_folder\AM2026"
+gl thedo    	"$priv_path\0_SAR_forecasting\dofiles\model\nepal"	// Do-files path
 
 * Globals for country-year identification
 gl cpi_version 	15
@@ -47,10 +50,8 @@ gl year 		2022	// Year to upload - Base year dataset
 gl final_year 	2028	// Change for last simulated year
 
 * Globals for country-specific paths
-loc scenario = 1
-if `scenario' == 1 gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_preconflict.xlsm" // Country's input Excel file for preconflict scenario
-else               gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_conflict.xlsm"    // Country's input Excel file for conflict scenario
 
+gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}.xlsm" // Country's input Excel file 
 cap mkdir 	"${path}/${country}\Data"
 gl data_out "${path}/${country}\Data"
 
@@ -145,6 +146,7 @@ foreach f of local files{
 	run "$thedo\17_output.do"
 
 	
+**# Bookmark #1
 /*===================================================================================================
 	- Quick summary
 ===================================================================================================*/

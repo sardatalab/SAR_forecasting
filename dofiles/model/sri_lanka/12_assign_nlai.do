@@ -91,7 +91,12 @@ foreach x of local nl_incomes2 {
 ===================================================================================================*/
 
 * Public transfers
-do "${thedo}\social_programs.do"
+/*if inrange(${year},2020,2024) {
+	do "${thedo}\social_programs.do"
+}
+else gen h_transfers_s = h_transfers
+*/
+gen h_transfers_s = h_transfers
 
 * Other non-labor income 
 gen h_otherinla_s = h_otherinla

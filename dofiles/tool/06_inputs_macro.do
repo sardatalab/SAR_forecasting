@@ -19,7 +19,7 @@ set timeout2 300
 ===================================================================================================*/
 
 * Load the data
-wbopendata, update
+wbopendata, sync
 wbopendata, indicator(SP.POP.TOTL; SP.POP.1564.TO; SP.POP.65UP.TO) year(2004:2030) projection clear
 
 * Keep only SAR countries

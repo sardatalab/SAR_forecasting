@@ -15,7 +15,7 @@ Modification date:  3/24/2026
 **# 1. Conflict Data
 /*=================================================================================================*/
 
-use "${path}\Oil prices\input\compiled_SM2026_MPOweights", clear
+use "${path}\Oil prices\input\compiled_2026conflict_MPOweights", clear
 
 	* labor income
 	qui egen inc_all_s = rowtotal(lai_m_s lai_s_s), m

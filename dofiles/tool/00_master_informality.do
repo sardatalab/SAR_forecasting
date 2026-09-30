@@ -28,18 +28,18 @@ set timeout2 400, perm
 * Modifiable globals
 
 ** Dates
-gl version 		"Mar-2-2026"
-gl inflows 		"Seriestableview_3_2_2026"	//	Remittances file name, structure "Seriestableview_D_MM_YYYY"
-gl date_inflows "Mar-2-2026"					//	Remittances file download date
+gl version 		"Aug-7-2026"
+gl inflows 		"Seriestableview_8_7_2026"	//	Remittances file name, structure "Seriestableview_D_MM_YYYY"
+gl date_inflows "Aug-7-2026"					//	Remittances file download date
 
 ** Paths
 gl path 		"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
 gl dofiles 		"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\Regional model\SAR_forecasting\dofiles\tool"
-gl mpo_version 	"${path}\SM2026" // Folder name
+gl mpo_version 	"${path}\AM2026" // Folder name
 gl downloads	"C:\Users\wb520054\Downloads"		// Your downloads folder for retrieving remittances file
 
 * Stable globals - Should not be changed
-gl cpi_version 	14
+gl cpi_version 	15
 gl cpi_base		2021
 gl povmod 		"\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\Central Team\MFM-allvintages.dta"
 gl input_master "input_MASTER.xlsx"							// Excel file read by regional tool

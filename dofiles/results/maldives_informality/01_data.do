@@ -223,9 +223,7 @@ forvalues i = 1/`col_years' {
 	****************************
 	if data[2,`i'] == 1 {
 			
-		if "${country}" == "BGD" qui use "${data_path}/${country}\Data/${country}_`year'_6s_dom_yes_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear
-		
-		else if "${country}" == "MDV" qui use "${data_path}/${country}\Data\Postcrisis_covidtransfers/${country}_`year'_6s_dom_no_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear
+		if "${country}" == "MDV" qui use "${data_path}/${country}\Data/${country}_`year'_6s_dom_no_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear
 		
 		*else if "${country}" == "MDV" qui use "${data_path}/${country}\Data/${country}_`year'_6s_dom_no_int_no_inc_no_cons_yes_matching_yes_st_yes.dta", clear
 

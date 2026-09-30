@@ -33,15 +33,15 @@ Britta
 ===================================================================================================*/
 
 gen deflator = .
-replace deflator = 0.9863023	if ${model} == 2020
-replace deflator = 0.991659401 	if ${model} == 2021
-replace deflator = 1.014796203 	if ${model} == 2022
-replace deflator = 1.044504057 	if ${model} == 2023
-replace deflator = 1.059125025 	if ${model} == 2024
-replace deflator = 1.1019159 	if ${model} == 2025
-replace deflator = 1.151199971 	if ${model} == 2026
-replace deflator = 1.200701569 	if ${model} == 2027
-replace deflator = 1.249930334 	if ${model} == 2028
+replace deflator = 0.986302257	if ${model} == 2020
+replace deflator = 0.991659355 	if ${model} == 2021
+replace deflator = 1.01479619 	if ${model} == 2022
+replace deflator = 1.044503997 	if ${model} == 2023
+replace deflator = 1.059124941 	if ${model} == 2024
+replace deflator = 1.101915776	if ${model} == 2025
+replace deflator = 1.136003525 	if ${model} == 2026
+replace deflator = 1.174660003 	if ${model} == 2027
+replace deflator = 1.218629092 	if ${model} == 2028
 
 gen min_w_priv = 4500
 gen min_w_pub = 7000

@@ -307,7 +307,7 @@ mata
 end
 
 loc m = scalar(v)
-clonevar h_int_remit_s = h_int_remit_`m'
+cap clonevar h_int_remit_s = h_int_remit_`m'
 
 /*===================================================================================================
 	- END

@@ -28,7 +28,7 @@ Modification date:  3/24/2026
 foreach country of global countries { // Open loop countries
 	
 	di in red "`country'"
-	gl country_path "${data}/`country'\Data\conflict"
+	gl country_path "${data_conflict}/`country'\Data"
 	
 	* Loading the data	
 	if "`country'" == "BGD" qui use "${country_path}\BGD_2026_6s_dom_yes_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear
@@ -47,7 +47,7 @@ foreach country of global countries { // Open loop countries
 	cap gen code = "`country'"
 	cap clonevar members = h_size
 	
-	if inlist("`country'","BGD","LKA") keep hhid pid code year wgt fexp_* male urban age h_head educat* members ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp socialsec emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp hogarsec ii itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
+	if inlist("`country'","BGD") keep hhid pid code year wgt fexp_* male urban age h_head educat* members ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp socialsec emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp hogarsec ii itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
 	
 	if "`country'"=="NPL" keep hhid pid code year weight fexp_* male urban age h_head educat* members ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp socialsec emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp hogarsec ii itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
 	
@@ -55,7 +55,7 @@ foreach country of global countries { // Open loop countries
 	
 	if "`country'" == "IND" keep code hhid pid year fexp_* male urban age h_head educat* members h_size *_ppp emplyd* empstat* industry* active* occupation* hogarsec region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
 	
-	if "`country'"=="BTN" keep hhid pid code year fexp_* male urban age h_head educat* members h_size ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
+	if inlist("`country'","BTN","LKA") keep hhid pid code year fexp_* male urban age h_head educat* members h_size ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
 	
 	* Year
 	qui gen baseline_yr=year
@@ -73,6 +73,7 @@ foreach country of global countries { // Open loop countries
 	
 	* Saving 
 	order country hhid pid members male age h_head urban marital labor_rel* ypc_26 pondera_* fexp_* sect_* informal_* occupation_* welfare* icp* cpi* lai_* h_* new_ratio tot_lai_* depen sect_secu*
+	tostring hhid pid, replace
 	qui append using "${path}\Oil prices\input\simulated_data_2026", force
 	qui replace country = upper(country)
 	drop if hogarsec == 1 & "`country'" == "IND"
@@ -144,6 +145,6 @@ foreach country of global countries { // Open loop countries
 	cap drop pondera_eph_26 pondera_oficial_26 aux_pondera_26
 
 	compress
-	save "${path}\Oil prices\input\compiled_SM2026_MPOweights", replace
+	save "${path}\Oil prices\input\compiled_2026conflict_MPOweights", replace
 
-	di in red "SM2026 Simulated data for 2026 completed"
+	di in red "Simulated data for 2026 conflict completed"

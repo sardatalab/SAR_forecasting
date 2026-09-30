@@ -20,8 +20,8 @@ loc prior_wgt "weight"
 loc nw_name   "all"
 
 * household ID (numeric) = psu + household   
-sort psu id, stable
-egen psuhid = group(psu id)
+*sort psu id, stable
+*egen psuhid = group(psu id)
 
 
 /*===================================================================================================

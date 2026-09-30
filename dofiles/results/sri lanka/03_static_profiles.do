@@ -71,7 +71,7 @@ ren _varname indicator
 qui order indicator
 qui replace indicator = "_year" if indicator == "year"
 sort indicator
-foreach var of varlist v1-v6 {
+foreach var of varlist v1-v4 {
    rename `var' y_`=`var'[1]'
 }
 qui drop if indicator == "_year"
@@ -107,5 +107,6 @@ la var PovertyRate3 "3 PovertyRate"
 for any 1 2 3: qui replace PovertyRateX = PovertyRateX * 100
 qui compress
 qui save "${data_path}\Pov_SAR_micro.dta", replace
+qui save "\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\data\micro_input\Pov_SAR_micro.dta", replace
 restore
 	

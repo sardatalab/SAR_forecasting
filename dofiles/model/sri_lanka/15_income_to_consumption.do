@@ -56,7 +56,7 @@ if "$matching" == "yes" {
 	* Prepare receiver dataset (samp.b)
 	preserve
 	gen id_rec = _n  
-	keep idh idp id_rec region vtil urban age h_size pc_inc_s welfare_base orig_ratio z_age z_h_size z_pc_inc_s
+	keep hhid pid id_rec region vtil urban age h_size pc_inc_s welfare_base orig_ratio z_age z_h_size z_pc_inc_s
 	tempfile receiver
 	save `receiver'
 	restore
@@ -64,7 +64,7 @@ if "$matching" == "yes" {
 	* Prepare donor dataset (samp.a)
 	preserve
 	gen id_don = _n  
-	keep idh idp id_don region vtil urban age h_size pc_inc_base orig_ratio z_age z_h_size z_pc_inc_base
+	keep hhid pid id_don region vtil urban age h_size pc_inc_base orig_ratio z_age z_h_size z_pc_inc_base
 	ren (z_age z_h_size z_pc_inc_base orig_ratio) (don_z_age don_z_h_size don_z_pc_inc_s ratio)
 	tempfile donor
 	save `donor'
@@ -92,13 +92,13 @@ if "$matching" == "yes" {
 	replace new_ratio = orig_ratio if new_ratio == .
 	
 	* Save new ratio
-	keep idh new_ratio
+	keep hhid new_ratio
 	tempfile ratio
 	save `ratio', replace
 	
 	* Merge with original simulated database
 	use "${data_out}\simulated.dta", clear
-	merge m:1 idh using `ratio'
+	merge m:1 hhid using `ratio'
 
 }
 

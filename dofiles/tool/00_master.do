@@ -14,6 +14,7 @@ Modification date:  02/22/2025
 
 *shell conda install selenium==4.21.0
 *shell conda install webdriver_manager==4.0.1
+cap ssc install wbopendata, replace
 
 drop _all
 version 17.0
@@ -28,18 +29,24 @@ set timeout2 400, perm
 * Modifiable globals
 
 ** Dates
-gl version 		"Apr-8-2026"
-gl inflows 		"Seriestableview_4_8_2026"	//	Remittances file name, structure "Seriestableview_D_MM_YYYY"
-gl date_inflows "Apr-8-2026"					//	Remittances file download date
+gl version 		"Sep-25-2026"
+gl inflows 		"Seriestableview_9_25_2026"	//	Remittances file name, structure "Seriestableview_D_MM_YYYY"
+gl date_inflows "Sep-25-2026"					//	Remittances file download date
 
 ** Paths
-gl path 		"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
-gl dofiles 		"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\Regional model\SAR_forecasting\dofiles\tool"
-gl mpo_version 	"${path}\SM2026" // Folder name
-gl downloads	"C:\Users\wb520054\Downloads"		// Your downloads folder for retrieving remittances file
+loc   use = 1
+if   `use' == 1 	gl user "C:\Users\wb520054" // Kelly
+else if `use' == 2  gl user "C:\Users\wb316966" // Sergio
+else				gl user "C:\Users\wb587758" // Diego
+
+gl path 		"${user}\WBG\SARDATALAB - Documents\Microsimulations"
+gl dofiles 		"${user}\WBG\SARDATALAB - Documents\Microsimulations\0_SAR_forecasting\dofiles\tool"
+gl mpo_version 	"${path}\AM2026" // Folder name
+gl downloads	"${user}\Downloads"		// Your downloads folder for retrieving remittances file
+gl cpi_version 	15
 
 * Stable globals - Should not be changed
-gl cpi_version 	14
+
 gl cpi_base		2021
 gl povmod 		"\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\Central Team\MFM-allvintages.dta"
 gl input_master "input_MASTER.xlsx"							// Excel file read by regional tool

@@ -28,7 +28,7 @@ Modification date:  3/24/2026
 foreach country of global countries { // Open loop countries
 	
 	di in red "`country'"
-	gl country_path "${data}/`country'\Data\preconflict"
+	gl country_path "${data_baseline}/`country'\Data\preconflict"
 	
 	* Loading the data	
 	if "`country'" == "BGD" qui use "${country_path}\BGD_2026_6s_dom_yes_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear

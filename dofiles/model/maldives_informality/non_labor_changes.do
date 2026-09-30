@@ -36,15 +36,15 @@ NOTE: This dofile progressively deflates non-labor income components (cash trans
 	
 	* Affect new disability transfers factor
 	ren (disability_s h_transfers_s) (disability_s_orig h_transfers_s_orig)
-	if ${model} == 2020 gen disability_s = disability_s_orig * (1 + 0.013887933) 
-	if ${model} == 2021 gen disability_s = disability_s_orig * (1 + 0.00841075) 
-	if ${model} == 2022 gen disability_s = disability_s_orig * (1 + -0.014580468)
-	if ${model} == 2023 gen disability_s = disability_s_orig * (1 + 0.436088246) 
-	if ${model} == 2024 gen disability_s = disability_s_orig * (1 + 0.416263391)
-	if ${model} == 2025 gen disability_s = disability_s_orig * (1 + 0.36126541) 
-	if ${model} == 2026 gen disability_s = disability_s_orig * (1 + 0.302988219) 
-	if ${model} == 2027 gen disability_s = disability_s_orig * (1 + 0.249269626) 
-	if ${model} == 2028 gen disability_s = disability_s_orig * (1 + 0.200066883) 
+	if ${model} == 2020 gen disability_s = disability_s_orig * (1 + 0.013887976) 
+	if ${model} == 2021 gen disability_s = disability_s_orig * (1 + 0.008410796) 
+	if ${model} == 2022 gen disability_s = disability_s_orig * (1 - 0.014580454) 
+	if ${model} == 2023 gen disability_s = disability_s_orig * (1 + 0.436088329) 
+	if ${model} == 2024 gen disability_s = disability_s_orig * (1 + 0.416263504)
+	if ${model} == 2025 gen disability_s = disability_s_orig * (1 + 0.361265563) 
+	if ${model} == 2026 gen disability_s = disability_s_orig * (1 + 0.320418438) 
+	if ${model} == 2027 gen disability_s = disability_s_orig * (1 + 0.276965246) 
+	if ${model} == 2028 gen disability_s = disability_s_orig * (1 + 0.230891343) 
 	
 	* New transfers vector
 	egen h_transfers_s = rowtotal(disability_s other_transfers_s), m
@@ -84,27 +84,27 @@ NOTE: This dofile progressively deflates non-labor income components (cash trans
 	
 	* Modifying Single Parent Allowance
 	
-	if ${model} == 2020 gen sing_parent_s = sing_parent_s_orig * (1 + 0.013887933) 
-	if ${model} == 2021 gen sing_parent_s = sing_parent_s_orig * (1 + 0.00841075) 
-	if ${model} == 2022 gen sing_parent_s = sing_parent_s_orig * (1 + -0.014580468)
-	if ${model} == 2023 gen sing_parent_s = sing_parent_s_orig * (1 + -0.042607836) 
-	if ${model} == 2024 gen sing_parent_s = sing_parent_s_orig * (1 + -0.055824406)
-	if ${model} == 2025 gen sing_parent_s = sing_parent_s_orig * (1 + -0.092489727) 
-	if ${model} == 2026 gen sing_parent_s = sing_parent_s_orig * (1 + 0.302988219) 
-	if ${model} == 2027 gen sing_parent_s = sing_parent_s_orig * (1 + 0.249269626) 
-	if ${model} == 2028 gen sing_parent_s = sing_parent_s_orig * (1 + 0.200066883) 
-
+	if ${model} == 2020 gen sing_parent_s = sing_parent_s_orig * (1 + 0.013887976) 
+	if ${model} == 2021 gen sing_parent_s = sing_parent_s_orig * (1 + 0.008410796) 
+	if ${model} == 2022 gen sing_parent_s = sing_parent_s_orig * (1 - 0.014580454) 
+	if ${model} == 2023 gen sing_parent_s = sing_parent_s_orig * (1 - 0.042607781) 
+	if ${model} == 2024 gen sing_parent_s = sing_parent_s_orig * (1 - 0.055824331)
+	if ${model} == 2025 gen sing_parent_s = sing_parent_s_orig * (1 - 0.092489624) 
+	if ${model} == 2026 gen sing_parent_s = sing_parent_s_orig * (1 + 0.320418438) 
+	if ${model} == 2027 gen sing_parent_s = sing_parent_s_orig * (1 + 0.276965246) 
+	if ${model} == 2028 gen sing_parent_s = sing_parent_s_orig * (1 + 0.230891343) 
+	
 	* Modifying Foster Parent Allowance	
 	
-	if ${model} == 2020 gen fost_parent_s = fost_parent_s_orig * (1 + 0.013887933) 
-	if ${model} == 2021 gen fost_parent_s = fost_parent_s_orig * (1 + 0.008410750) 
-	if ${model} == 2022 gen fost_parent_s = fost_parent_s_orig * (1 + -0.014580468)
-	if ${model} == 2023 gen fost_parent_s = fost_parent_s_orig * (1 + -0.042607836) 
-	if ${model} == 2024 gen fost_parent_s = fost_parent_s_orig * (1 + 2.147251980)
-	if ${model} == 2025 gen fost_parent_s = fost_parent_s_orig * (1 + 2.025034244) 
-	if ${model} == 2026 gen fost_parent_s = fost_parent_s_orig * (1 + 1.895529377) 
-	if ${model} == 2027 gen fost_parent_s = fost_parent_s_orig * (1 + 1.776154723) 
-	if ${model} == 2028 gen fost_parent_s = fost_parent_s_orig * (1 + 1.666815296) 
+	if ${model} == 2020 gen fost_parent_s = fost_parent_s_orig * (1 + 0.013887976) 
+	if ${model} == 2021 gen fost_parent_s = fost_parent_s_orig * (1 + 0.008410796) 
+	if ${model} == 2022 gen fost_parent_s = fost_parent_s_orig * (1 - 0.014580454) 
+	if ${model} == 2023 gen fost_parent_s = fost_parent_s_orig * (1 - 0.042607781) 
+	if ${model} == 2024 gen fost_parent_s = fost_parent_s_orig * (1 + 2.14725223)
+	if ${model} == 2025 gen fost_parent_s = fost_parent_s_orig * (1 + 2.025034585) 
+	if ${model} == 2026 gen fost_parent_s = fost_parent_s_orig * (1 + 1.934263196) 
+	if ${model} == 2027 gen fost_parent_s = fost_parent_s_orig * (1 + 1.837700548) 
+	if ${model} == 2028 gen fost_parent_s = fost_parent_s_orig * (1 + 1.735314096)
 	
 	* Putting all changes together
 	ren h_transfers_s h_transfers_s_orig2
@@ -130,15 +130,15 @@ NOTE: This dofile progressively deflates non-labor income components (cash trans
 	
 	* Affect new non-contributory pensions factor
 	ren (pens_ncon_s h_pensions_s) (pens_ncon_s_orig h_pensions_s_orig)
-	if ${model} == 2020 gen pens_ncon_s = pens_ncon_s_orig * (1 + 0.013887933) 
-	if ${model} == 2021 gen pens_ncon_s = pens_ncon_s_orig * (1 + 0.008410750) 
-	if ${model} == 2022 gen pens_ncon_s = pens_ncon_s_orig * (1 + -0.014580468) 
-	if ${model} == 2023 gen pens_ncon_s = pens_ncon_s_orig * (1 + -0.042607836) 
-	if ${model} == 2024 gen pens_ncon_s = pens_ncon_s_orig * (1 + -0.055824406)
-	if ${model} == 2025 gen pens_ncon_s = pens_ncon_s_orig * (1 + -0.092489727) 
-	if ${model} == 2026 gen pens_ncon_s = pens_ncon_s_orig * (1 + -0.131341187) 
-	if ${model} == 2027 gen pens_ncon_s = pens_ncon_s_orig * (1 + -0.167153583) 
-	if ${model} == 2028 gen pens_ncon_s = pens_ncon_s_orig * (1 + -0.199955411) 
+	if ${model} == 2020 gen pens_ncon_s = pens_ncon_s_orig * (1 + 0.013887976) 
+	if ${model} == 2021 gen pens_ncon_s = pens_ncon_s_orig * (1 + 0.008410796) 
+	if ${model} == 2022 gen pens_ncon_s = pens_ncon_s_orig * (1 - 0.014580454) 
+	if ${model} == 2023 gen pens_ncon_s = pens_ncon_s_orig * (1 - 0.042607781) 
+	if ${model} == 2024 gen pens_ncon_s = pens_ncon_s_orig * (1 - 0.055824331)
+	if ${model} == 2025 gen pens_ncon_s = pens_ncon_s_orig * (1 - 0.092489624) 
+	if ${model} == 2026 gen pens_ncon_s = pens_ncon_s_orig * (1 - 0.119721041) 
+	if ${model} == 2027 gen pens_ncon_s = pens_ncon_s_orig * (1 - 0.148689836) 
+	if ${model} == 2028 gen pens_ncon_s = pens_ncon_s_orig * (1 - 0.179405771) 
 	
 	* New pensions vector
 	egen h_pensions_s = rowtotal(pens_con_s pens_ncon_s), m

@@ -66,9 +66,10 @@ foreach country of global countries {
 	qui gen v_fert = incr_ins_agr * 100
 
 	* 2.3. Merge with food shares
-	if "`country'" == "IND" qui merge m:1 hhid using "${path}\food_vectors_SAR/`country'_food_share_2023_s2s", keep(1 3) keepusing(share_food) nogen
-	else if "`country'" == "BTN" qui merge 1:1 hhid pid using "${path}\food_vectors_SAR/`country'_food_share_2022_s2s", keep(1 3) keepusing(share_food) nogen
-	else qui merge 1:1 hhid pid using "${path}\food_vectors_SAR/`country'_food_share", keep(1 3) keepusing(share_food) nogen
+	if "`country'" == "IND" qui merge m:1 hhid using "${path}\Oil prices\food_vectors_SAR/`country'_food_share_2023_s2s", keep(1 3) keepusing(share_food) nogen
+	else if "`country'" == "BTN" qui merge 1:1 hhid pid using "${path}\Oil prices\\food_vectors_SAR/`country'_food_share_2022_s2s", keep(1 3) keepusing(share_food) nogen
+	else if "`country'" == "LKA" qui merge 1:1 hhid pid using "${path}\Oil prices\\food_vectors_SAR/`country'_food_share_2024_s2s", keep(1 3) keepusing(share_food) nogen
+	else qui merge 1:1 hhid pid using "${path}\Oil prices\\food_vectors_SAR/`country'_food_share", keep(1 3) keepusing(share_food) nogen
 
 	*-------------------------------------------------------------------------
 	* 3. GAINS IN INCOME AND LOSSES IN PURCHASING POWER
@@ -262,7 +263,7 @@ foreach country of global countries {
 	qui export excel using "${out}", sheet("transitions2") firstrow(variables) sheetreplace
 	save "${path}\Oil prices\output\transitions.dta", replace
 
-	qui shell "C:/Program Files/R/R-4.5.3/bin/R.exe" --vanilla <"${path}/Oil prices/dofiles/transitions.R"
+	qui shell "C:/Program Files/R/R-4.5.3/bin/R.exe" --vanilla <"${dos}/transitions.R"
 
 
 /*=================================================================================================*/

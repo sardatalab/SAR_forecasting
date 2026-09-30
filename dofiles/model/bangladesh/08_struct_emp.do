@@ -200,7 +200,7 @@ while (`mm' > 0) {
 	loc mm = r(N)
 	di in red "there are `mm' observations left"
 	if "$country" == "LKA" & $year == 2009 & `mm' <= 273 loc mm = 0	
-	else if `mm' <= 6 loc mm = 0	
+	else if `mm' <= 7 loc mm = 0	
 	note: adjust in case it doesn´t converge, increase the 4. 
 }
 

@@ -17,6 +17,7 @@ note: those with public jobs do not change between sectors
 ===================================================================================================*/
 
 * public sector fixed
+cap drop public
 clonevar public = public_job
 
 * number of sectors

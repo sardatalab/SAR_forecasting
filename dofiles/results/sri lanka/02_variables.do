@@ -11,7 +11,7 @@ replace cpi${ppp} = r(mean) if cpi${ppp} == .
 qui sum icp${ppp} 
 replace icp${ppp} = r(mean) if icp${ppp} == .
 
-qui gen pline_nat_ppp = pline_nat2 / cpi${ppp} / icp${ppp} 
+qui gen pline_nat_ppp = 6966 / cpi${ppp} / icp${ppp} 
 
 * Poverty headcount and gap
 *** This is necessary for the sheet Poverty and Inequality
@@ -115,7 +115,8 @@ qui gen gini = ""
 qui gen theil = ""
 
 loc init = data[1,1]
-loc end = `init' + 5
+if `init' <= ${min_sim_year} loc init = ${min_sim_year} + 1
+loc end = data[1,1] + 5
 
 forvalues a = `init'/ `end' {
 	qui ainequal welfare_s [w=fexp_s] if year == `a'

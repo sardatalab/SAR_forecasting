@@ -107,5 +107,6 @@ la var PovertyRate3 "3 PovertyRate"
 for any 1 2 3: qui replace PovertyRateX = PovertyRateX * 100
 qui compress
 qui save "${data_path}\Pov_SAR_micro.dta", replace
+qui save "\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\data\micro_input\Pov_SAR_micro.dta", replace
 restore
 	

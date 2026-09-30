@@ -32,21 +32,21 @@ set more off
 * NOTE: YOU ONLY NEED TO CHANGE THESE OPTIONS
 
 * Globals for general paths
-gl priv_path 	"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
-gl path  		"$priv_path\SM2026"
-gl thedo    	"$priv_path\Regional model\SAR_forecasting\dofiles\model\maldives_informality"	// Do-files path
+gl priv_path 	"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
+gl path  		"$priv_path\1_ST_working_folder\AM2026"
+gl thedo    	"$priv_path\0_SAR_forecasting\dofiles\model\maldives_informality"	// Do-files path
 
 * Globals for country-year identification
-gl cpi_version 	14
+gl cpi_version 	15
 gl ppp 			2021	// Change for "yes" / "no" depending on the version
 gl country 		"MDV" 	// Country to upload
 gl year 		2019	// Year to upload - Base year dataset
 gl final_year 	2028	// Change for last simulated year
-gl nonlabor		"non_labor_changes_v2" // Changes in non labor income V1 precrisis V2 postcrisis
-gl minwage		"min_wage_adj_postcrisis" // Changes in minimum wage - precrisis and postcrisis
+gl nonlabor		"non_labor_changes" // Changes in non labor income V1 precrisis V2 postcrisis in SM2026
+gl minwage		"min_wage_adj" // Changes in minimum wage - precrisis and postcrisis in SM2026
 
 * Globals for country-specific paths
-gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_Informality.xlsm" // Country's input Excel file
+gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}.xlsm" // Country's input Excel file
 cap mkdir 	"${path}/${country}\Data"
 gl data_out "${path}/${country}\Data"
 

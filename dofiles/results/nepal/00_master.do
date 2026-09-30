@@ -19,7 +19,7 @@ drop _all
 frame reset
 version 17.0 
 *cap net install etime
-*cap net install dm31, from(http://www.stata.com/stb/stb26)
+cap net install dm31, from(http://www.stata.com/stb/stb26)
 etime, start
 
 /*==============================================================================================
@@ -28,17 +28,15 @@ etime, start
 
 
 * Paths
-loc   dir0 = 1
-if   `dir0' == 1 gl user0 "C:\Users\wb520054"
-else             gl user0 "C:\Users\wb316966"
+loc   dir0 = 5
+if   `dir0' == 1                gl user "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
+else if  `dir0' == 2            gl user "C:\Users\wb316966\WBG\SARDATALAB - Documents\Microsimulations"
+else             gl user "C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations"
 
-loc   dir1   = 1
-if   `dir1' == 1 gl user1 "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
-else             gl user1 "C:\Users\wb316966\WBG\Kelly Yelitza Montoya Munoz - Microsimulations"
 
-gl path       "${user0}\WBG\SARDATALAB - Documents\Microsimulations\SM2026"
-gl data_path  "${user1}\SM2026"
-gl thedo      "${user1}\Regional model\SAR_forecasting\dofiles\results\nepal"	// Do-files path
+gl path       "${user}\AM2026"
+gl data_path  "${user}\\1_ST_working_folder\AM2026"
+gl thedo      "${user}\0_SAR_forecasting\dofiles\results\nepal"	// Do-files path
 gl avail_data "${path}\_inputs\Data availability by country.xlsx"
 gl povmod 	  "\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\Central Team\MFM-allvintages.dta"
 
@@ -72,7 +70,9 @@ mkmat B-G, mat(data)
 
 * Output file
 gl country_path "${path}/${country}"
-gl outfile "${country_path}\Results_${country}_conflict.xlsm"
+gl outfile "${country_path}\Results_${country}.xlsm"
+
+copy "${path}\_inputs\Results_${country}.xlsm" "${country_path}\Results_${country}.xlsm", replace
 
 run "${thedo}\01_data.do"
 run "${thedo}\02_variables.do"

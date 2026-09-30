@@ -8,7 +8,7 @@ E-mail:				solivieri@worldbank.org; kmontoyamunoz@worldbank.org
 Creation Date:		11/4/2024
 
 Last Modification:	Kelly Y. Montoya (kmontoyamunoz@worldbank.org)
-Modification date:  3/14/2025
+Modification date:  9/1/2026
 ===================================================================================================*/
 
 version 17.0
@@ -32,9 +32,9 @@ set more off
 * NOTE: YOU ONLY NEED TO CHANGE THESE OPTIONS
 
 * Globals for general paths
-gl priv_path 	"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
-gl path  		"$priv_path\SM2026"
-gl thedo    	"$priv_path\Regional model\SAR_forecasting\dofiles\model\india"	// Do-files path
+gl priv_path 	"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
+gl path  		"$priv_path\1_ST_working_folder\AM2026"
+gl thedo    	"$priv_path\0_SAR_forecasting\dofiles\model\india"	// Do-files path
 
 * Globals for country-year identification
 gl cpi_version 	15
@@ -44,7 +44,7 @@ gl year 		2023	// Year to upload - Base year dataset
 gl final_year 	2028	// Change for last simulated year
 
 * Globals for country-specific paths
-gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_conflict.xlsm" // Country's input Excel file
+gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}.xlsm" // Country's input Excel file
 cap mkdir 	"${path}/${country}\Data"
 gl data_out "${path}/${country}\Data"
 
