@@ -220,44 +220,50 @@ forvalues i = 1/`col_years' {
 	****************************
 	if data[2,`i'] == 1 {
 			
-		qui use "${data_path}/${country}\Data\preconflict/${country}_`year'_6s_dom_yes_int_yes_inc_yes_cons_no_matching_yes_st_yes.dta", clear
+		if `year' > ${min_sim_year} {
+			
+				qui use "${data_path}/${country}\Data/preconflict/${country}_`year'_6s_dom_yes_int_yes_inc_yes_cons_no_matching_yes_st_yes.dta", clear
 
-		di in red "${country} `year' loaded from simulations"
-		
-		* Preparing variables
-		cap drop year
-		qui gen year = `year'
-		keep countrycode year hhid pid fexp_* sample welfare_* male urban age relationharm educat7 h_size depen active* emplyd_s pc_inc_* poor*1 occupation_* lai_m_s lai_s_s tot_lai_* h_transfers* h_*remit* h_pensions* h_otherinla* h_capital* h_renta_imp* labor_rel salaried_s self_emp unpaid unskilled_s skilled_s pline_nat2 cpi${ppp} icp${ppp}
-		
-		cap keep if welfare_s!=.
-		
-		* Household head
-		qui gen h_head = relationharm == 1 if relationharm != .
-		qui bysort hhid: egen n_heads = sum(h_head), m
-		qui replace h_head = 0 if h_head == . & n_heads == 1
-		drop n_heads
-		
-		* Labor status
-		cap drop emplyd_s
-		cap drop unemplyd_s
-		gen emplyd_s	= inrange(occupation_s,2,7)	if welfare_s != . & occupation_s != . & sample == 1
-		gen unemplyd_s 	= occupation_s == 1  if welfare_s != . & inrange(occupation_s,1,7) & sample == 1
-		
-		
-		* Adjusting non-labor income to make it comparable
-		local nonlabor "transfers int_remit dom_remit ns_remit pensions capital otherinla renta_imp"
-		foreach nli of local nonlabor  {
-			qui bysort year hhid: egen aux_`nli' = sum(h_`nli'_s) if h_head != ., m
-			qui replace h_`nli'_s = aux_`nli' 
-			drop  aux_`nli' 
+			di in red "${country} `year' loaded from simulations"
+			
+			* Preparing variables
+			cap drop year
+			qui gen year = `year'
+			keep countrycode year hhid pid fexp_* sample welfare_* male urban age relationharm educat7 h_size depen active* emplyd_s pc_inc_* poor*1 occupation_* lai_m_s lai_s_s tot_lai_* h_transfers* h_*remit* h_pensions* h_otherinla* h_capital* h_renta_imp* labor_rel salaried_s self_emp unpaid unskilled_s skilled_s cpi${ppp} icp${ppp}
+			
+			cap keep if welfare_s!=.
+			
+			* Household head
+			qui gen h_head = relationharm == 1 if relationharm != .
+			qui bysort hhid: egen n_heads = sum(h_head), m
+			qui replace h_head = 0 if h_head == . & n_heads == 1
+			drop n_heads
+			
+			* Labor status
+			cap drop emplyd_s
+			cap drop unemplyd_s
+			gen emplyd_s	= inrange(occupation_s,2,7)	if welfare_s != . & occupation_s != . & sample == 1
+			gen unemplyd_s 	= occupation_s == 1  if welfare_s != . & inrange(occupation_s,1,7) & sample == 1
+			
+			
+			* Adjusting non-labor income to make it comparable
+			cap gen h_int_remit_s = . // This correction is necessary as long as the S2S exercise is not updated with the new inflows projections
+			local nonlabor "transfers int_remit dom_remit ns_remit pensions capital otherinla renta_imp"
+			foreach nli of local nonlabor  {
+				qui bysort year hhid: egen aux_`nli' = sum(h_`nli'_s) if h_head != ., m
+				qui replace h_`nli'_s = aux_`nli' 
+				drop  aux_`nli' 
+			}
+			
+			* Saving temporal database
+			qui compress
+			if `year' == data[1,1] qui save ``country'', replace
+			else {
+				qui cap append using ``country''
+				qui save ``country'', replace
+			}
 		}
 		
-		* Saving temporal database
-		qui compress
-		if `year' == data[1,1] qui save ``country'', replace
-		else {
-			qui cap append using ``country''
-			qui save ``country'', replace
-		}
+		else continue
 	}
 }

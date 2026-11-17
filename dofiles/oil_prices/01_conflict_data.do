@@ -37,7 +37,7 @@ foreach country of global countries { // Open loop countries
 	
 	else if "`country'" == "IND" qui use "${country_path}\IND_2026_6s_dom_no_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear
 	
-	else if "`country'" == "NPL" qui use "${country_path}\NPL_2026_6s_dom_yes_int_yes_inc_yes_cons_no_matching_yes_st_yes.dta", clear
+	else if "`country'" == "NPL" qui use "${country_path}\NPL_2026_6s_dom_yes_int_yes_inc_no_cons_no_matching_yes_st_yes.dta", clear
 	
 	else if "`country'" == "LKA" qui use "${country_path}\LKA_2026_6s_dom_yes_int_yes_inc_yes_cons_no_matching_yes_st_yes.dta", clear
 	

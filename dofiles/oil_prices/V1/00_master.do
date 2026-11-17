@@ -19,16 +19,16 @@ version 17.0
 /*=================================================================================================*/
 
 * Globals for paths
-gl path 			"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\SM2026"
-gl data 			"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\SM2026"
+gl path 			"C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations\AM2026"
+gl data 			"C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations\1_ST_working_folder\AM2026"
 gl food_share 		"${path}\food_vectors_SAR"
 gl dos 				"${path}\Oil prices\dofiles"
 gl input_baseline 	"${path}\Oil prices\input\compiled_baseline_MPOweights"
-gl input_conflict 	"${path}\Oil prices\input\compiled_SM2026_MPOweights"
+gl input_conflict 	"${path}\Oil prices\input\compiled_AM2026_MPOweights"
 
 
 * Other globals
-gl version 		"MAR_25_2026"
+gl version 		"OCT_26_2026"
 gl countries 	"BGD MDV"
 gl v_oil = (94/78.58)-1 // Projected growth in oil prices for Q1 and Q2 of 2026 in Feb report (56.14), for March (78.58) and projected new price from Global assumptions (94). - https://www.eia.gov/outlooks/steo/report/us_oil.php, consulted on 03-17-2026, macro updated on 03-24-2026.
 gl out_sim "${path}\Oil prices\output\compiled_sim_${version}"

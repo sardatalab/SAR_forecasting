@@ -37,7 +37,7 @@ foreach country of global countries { // Open loop countries
 	
 	else if "`country'" == "IND" qui use "${country_path}\IND_2026_6s_dom_no_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear
 	
-	else if "`country'" == "NPL" qui use "${country_path}\NPL_2026_6s_dom_yes_int_yes_inc_yes_cons_no_matching_yes_st_yes.dta", clear
+	else if "`country'" == "NPL" qui use "${country_path}\NPL_2026_6s_dom_yes_int_yes_inc_no_cons_no_matching_yes_st_yes.dta", clear
 	
 	else if "`country'" == "LKA" qui use "${country_path}\LKA_2026_6s_dom_yes_int_yes_inc_yes_cons_no_matching_yes_st_yes.dta", clear
 	
@@ -47,7 +47,9 @@ foreach country of global countries { // Open loop countries
 	cap gen code = "`country'"
 	cap clonevar members = h_size
 	
-	if inlist("`country'","BGD","LKA") keep hhid pid code year wgt fexp_* male urban age h_head educat* members ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp socialsec emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp hogarsec ii itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
+	if inlist("`country'","BGD") keep hhid pid code year wgt fexp_* male urban age h_head educat* members ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp socialsec emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp hogarsec ii itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
+	
+		if inlist("`country'","LKA") keep hhid pid code year /*wgt*/ fexp_* male urban age h_head educat* members ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp /*socialsec*/ emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp /*hogarsec*/ /*ii*/ itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
 	
 	if "`country'"=="NPL" keep hhid pid code year weight fexp_* male urban age h_head educat* members ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp socialsec emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp hogarsec ii itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio depen sect_secu*
 	 
@@ -72,6 +74,7 @@ foreach country of global countries { // Open loop countries
 	
 	* Saving 
 	order country hhid pid members male age h_head urban marital labor_rel* ypc_26 pondera_* fexp_* sect_* informal_* occupation_* welfare* icp* cpi* lai_* h_* new_ratio tot_lai_* depen sect_secu*
+		tostring hhid pid, replace
 	qui append using "${path}\Oil prices\input\compiled_baseline", force
 	qui replace country = upper(country)
 	drop if hogarsec == 1 & "`country'" == "IND"

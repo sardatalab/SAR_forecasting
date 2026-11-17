@@ -32,7 +32,7 @@ set more off
 * NOTE: YOU ONLY NEED TO CHANGE THESE OPTIONS
 
 * Globals for general paths
-gl priv_path 	"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
+gl priv_path 	"C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations"
 gl path  		"$priv_path\1_ST_working_folder\AM2026"
 gl thedo    	"$priv_path\0_SAR_forecasting\dofiles\model\maldives_informality"	// Do-files path
 
@@ -46,7 +46,7 @@ gl nonlabor		"non_labor_changes" // Changes in non labor income V1 precrisis V2 
 gl minwage		"min_wage_adj" // Changes in minimum wage - precrisis and postcrisis in SM2026
 
 * Globals for country-specific paths
-gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}.xlsm" // Country's input Excel file
+gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_preconflict.xlsm" // Country's input Excel file
 cap mkdir 	"${path}/${country}\Data"
 gl data_out "${path}/${country}\Data"
 

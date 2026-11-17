@@ -32,21 +32,27 @@ set more off
 * NOTE: YOU ONLY NEED TO CHANGE THESE OPTIONS
 
 * Globals for general paths
-gl priv_path 	"C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
-gl path  		"$priv_path\SM2026"
-gl thedo    	"$priv_path\Regional model\SAR_forecasting\dofiles\model"	// Do-files path
+*gl priv_path 	"C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations"
+gl priv_path "C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations\1_ST_working_folder"
+gl path  		"$priv_path\AM2026"
+*gl thedo    	"$priv_path\Regional model\SAR_forecasting\dofiles\model"	// Do-files path
+gl thedo        "C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations\0_SAR_forecasting\dofiles\model"
 
 * Globals for country-year identification
 gl cpi_version 	14
 gl ppp 			2021	// Change for "yes" / "no" depending on the version
-gl country 		"BGD" 	// Country to upload
+gl country 		"IND" 	// Country to upload
 gl year 		2022	// Year to upload - Base year dataset
 gl final_year 	2028	// Change for last simulated year
 
 * Globals for country-specific paths
-gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}.xlsm" // Country's input Excel file
-cap mkdir 	"${path}/${country}\Data"
-gl data_out "${path}/${country}\Data"
+*gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}.xlsm" // Country's input Excel file
+gl inputs "${path}/${country}\Microsimulation_Inputs_${country}_preconflict.xlsm"  
+*cap mkdir 	"${path}/${country}\Data"
+
+*gl data_out "${path}/${country}\Data"
+gl data_out "${path}/${country}\Data\preconflict"
+
 
 * Parameters
 gl sector_model 	6 		// Change for "3" or "6" to change intrasectoral variation
@@ -65,13 +71,16 @@ gl cons_re_scale 	"no" 	// Change for "yes"/"no" re-scale final consumption usin
 * Support module - CPIs and PPPs
 dlw, country(Support) year(2005) type(GMDRAW) surveyid(Support_2005_CPI_v${cpi_version}_M) filename(Final_CPI_PPP_to_be_used.dta)
 keep if code == "${country}" & year == ${year}
+drop if datalevel ==0  //added by DGL reconstructing preconflict IND AM 2026
 keep code year cpi${ppp} icp${ppp}
 rename code countrycode
 tempfile dlwcpi
 save `dlwcpi', replace
+
+
 		
 * SARMD modules - IND LBR INC
-local modules "IND LBR INC"
+local modules "IND LBR"
 foreach m of local modules {
 	
 	di in red "`m'"
@@ -85,7 +94,7 @@ foreach m of local modules {
 * Merge
 use `IND'
 merge 1:1 hhid pid using `LBR', nogen keep(1 3) force
-merge 1:1 hhid pid using `INC', nogen keep(1 3)
+*merge 1:1 hhid pid using `INC', nogen keep(1 3)
 merge m:1 countrycode year using `dlwcpi', nogen keep(1 3)
 
 

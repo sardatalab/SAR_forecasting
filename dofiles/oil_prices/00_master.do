@@ -19,9 +19,9 @@ version 17.0
 /*=================================================================================================*/
 
 * Globals for paths
-gl microsims_dir	"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
+gl microsims_dir	"C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations"
 gl path 			"${microsims_dir}\AM2026"
-gl data_baseline	"${microsims_dir}\1_ST_working_folder\SM2026"
+gl data_baseline	"${microsims_dir}\1_ST_working_folder\AM2026"
 gl data_conflict	"${microsims_dir}\1_ST_working_folder\AM2026"
 gl food_share 		"${path}\food_vectors_SAR"
 gl dos 				"${microsims_dir}\0_SAR_forecasting\dofiles\oil_prices"
@@ -30,9 +30,12 @@ gl input_conflict 	"${path}\Oil prices\input\compiled_2026conflict_MPOweights"
 
 
 * Other globals
-gl version 		"SEP_29_2026"
-gl countries 	"BGD MDV NPL IND" // LKA doesn't have a baseline for now since we moved to S2S, and BTN model is yet to be defined
-gl v_oil = ((94/78.58)-1)*100 // Projected growth in oil prices for Q1 and Q2 of 2026 in Feb report (56.14), for March (78.58) and projected new price from Global assumptions (94). - https://www.eia.gov/outlooks/steo/report/us_oil.php, consulted on 03-17-2026, macro updated on 03-24-2026.
+gl version 		"OCT_26_2026"
+gl countries 	"BGD BTN IND LKA MDV NPL" //BGD BTN IND LKA MDV NPL "  //  // LKA doesn't have a baseline for now since we moved to S2S, and BTN model is yet to be defined
+gl v_oil = ((87.02/72.74)-1)*100 //West Texas Intermediate Spot Average Q3/Q1 2026 
+
+
+// Previous note from Kelly:  Projected growth in oil prices for Q1 and Q2 of 2026 in Feb report (56.14), for March (78.58) and projected new price from Global assumptions (94). - https://www.eia.gov/outlooks/steo/report/us_oil.php, consulted on 03-17-2026, macro updated on 03-24-2026.
 gl out_sim "${path}\Oil prices\output\compiled_sim_${version}"
 gl out "${path}\Oil prices\output\SAR_Iran_conflict_${version}.xlsx"
 gl out_mat "${path}\Oil prices\output\deco_matrix.xlsx"

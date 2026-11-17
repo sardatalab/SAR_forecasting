@@ -27,10 +27,13 @@ etime, start
 ==============================================================================================*/
 
 
+
 * Paths
-gl path "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\SM2026"
-gl data_path "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\SM2026"
-gl thedo     "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations\Regional model\SAR_forecasting\dofiles\results\india"	// Do-files path
+gl path "C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations\AM2026"
+*gl data_path "C:\Users\\OneDrive - WBG\02_SAR Stats Team\Microsimulations\AM2026"
+gl data_path  "C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations\1_ST_working_folder\AM2026"
+*gl thedo     "C:\Users\\OneDrive - WBG\02_SAR Stats Team\Microsimulations\Regional model\SAR_forecasting\dofiles\results\india"	// Do-files path
+gl thedo  "C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations\0_SAR_forecasting\dofiles\results\india"
 gl avail_data "${path}\_inputs\Data availability by country.xlsx"
 gl povmod 	  "\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\Central Team\MFM-allvintages.dta"
 

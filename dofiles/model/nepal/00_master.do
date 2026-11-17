@@ -57,7 +57,7 @@ gl data_out "${path}/${country}\Data"
 
 * Parameters
 gl sector_model 	6 		// Change for "3" or "6" to change intrasectoral variation
-gl inc_re_scale 	"yes" 	// Change for "yes"/"no" re-scale labor income using gdp
+gl inc_re_scale 	"no" 	// changed for conflict anaysis 10-28-26 // Change for "yes"/"no" re-scale labor income using gdp
 gl matching			"yes"	// Change for "yes" or "no" to activate matching for consumption to income ratio
 gl standardization	"yes"	// Performs variables standardization before matching
 gl rn_int_remitt 	"yes" 	// Change for "yes" or "no" (random allocation) on modelling intern. remittances
@@ -80,13 +80,13 @@ save `dlwcpi', replace
 * SARMD modules - IND LBR INC
 local modules "IND LBR INC"
 foreach m of local modules {
-	
-	di in red "`m'"
-	if "`m'" == "IND" dlw, count("${country}") y(${year}) t(sarmd) mod(`m') verm(03) vera(01) clear
-	else dlw, count("${country}") y(${year}) t(sarmd) mod(`m') clear
-	cap drop __000000
-	tempfile `m'
-	save ``m'', replace	
+    di in red "`m'"
+    if "`m'" == "IND" dlw, count("${country}") y(${year}) t(sarmd) mod(`m') verm(03) vera(01) clear
+    if "`m'" == "LBR" dlw, count("${country}") y(${year}) t(sarmd) mod(`m') clear
+    if "`m'" == "INC" dlw, count("${country}") y(${year}) t(sarmd) mod(`m') verm(04) vera(01) clear
+    cap drop __000000
+    tempfile `m'
+    save ``m'', replace
 }
 		
 * Merge

@@ -32,9 +32,11 @@ set more off
 * NOTE: YOU ONLY NEED TO CHANGE THESE OPTIONS
 
 * Globals for general paths
-loc ppath   = 1
+loc ppath   = 5
 if `ppath' == 1 gl priv_path 	"C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations"
-else            gl priv_path 	"C:\Users\wb316966\WBG\SARDATALAB - Documents\Microsimulations"
+else if  `ppath' == 2          gl priv_path 	"C:\Users\wb316966\WBG\SARDATALAB - Documents\Microsimulations"
+else            gl priv_path 	"C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations"
+
 gl path  		"$priv_path\1_ST_working_folder\AM2026"
 gl thedo    	"$priv_path\0_SAR_forecasting\dofiles\model\sri_lanka"	// Do-files path
 
@@ -46,7 +48,7 @@ gl year 		2024	// Year to upload - Base year dataset
 gl final_year 	2028	// Change for last simulated year
 
 * Globals for country-specific paths
-gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_LFS_Imputed.xlsm" // Country's input Excel file
+gl inputs   "${path}/${country}\Microsimulation_Inputs_${country}_LFS_Imputed_preconflict.xlsm" // Country's input Excel file
 cap mkdir 	"${path}/${country}\Data"
 gl data_out "${path}/${country}\Data"
 

@@ -28,17 +28,21 @@ etime, start
 
 
 * Paths
-loc   dir0 = 1
-if   `dir0' == 1 gl user0 "C:\Users\wb520054"
-else             gl user0 "C:\Users\wb316966"
+loc   dir0 = 3
+if          `dir0' == 1   gl user0 "C:\Users\wb520054"
+else  if    `dir0' == 2   gl user0 "C:\Users\wb316966"
+else                      gl user0 "C:\Users\wb587758"
 
-loc   dir1   = 1
-if   `dir1' == 1 gl user1 "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
-else             gl user1 "C:\Users\wb316966\WBG\Kelly Yelitza Montoya Munoz - Microsimulations"
 
-gl path       "${user0}\WBG\SARDATALAB - Documents\Microsimulations\SM2026"
-gl data_path  "${user1}\SM2026"
-gl thedo      "${user1}\Regional model\SAR_forecasting\dofiles\results\nepal"	// Do-files path
+loc   dir1   = 3
+if      `dir1' == 1  gl user1 "C:\Users\wb520054\OneDrive - WBG\02_SAR Stats Team\Microsimulations"
+else if `dir1' == 2  gl user1 "C:\Users\wb316966\WBG\Kelly Yelitza Montoya Munoz - Microsimulations"
+else                 gl user1 "C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations"
+
+
+gl path       "${user0}\WBG\SARDATALAB - Documents\Microsimulations\AM2026"
+gl data_path  "${user1}\1_ST_working_folder\AM2026"
+gl thedo      "${user1}\0_SAR_forecasting\dofiles\results\nepal"	// Do-files path
 gl avail_data "${path}\_inputs\Data availability by country.xlsx"
 gl povmod 	  "\\wurepliprdfs01\gpvfile\gpv\Knowledge_Learning\Pov Projection\Central Team\MFM-allvintages.dta"
 

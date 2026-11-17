@@ -26,7 +26,7 @@ forvalues i = 1/`col_years' {
 		save `dlwcpi', replace
 
 		* India actual data follows the same harmonized source used in model/india
-		qui use "C:\Users\wb520054\WBG\SARDATALAB - Documents\Microsimulations\SM2026/${country}\input/IND_allyears_PLFS_V1_final_v01_M_cpi_microsim.dta", clear
+		qui use "C:\Users\wb587758\WBG\SARDATALAB - Documents\Microsimulations\SM2026/${country}\input/IND_allyears_PLFS_V1_final_v01_M_cpi_microsim.dta", clear
 		keep if year == `year'
 		cap gen countrycode = "${country}"
 		merge m:1 year using `dlwcpi', nogen keep(1 3)

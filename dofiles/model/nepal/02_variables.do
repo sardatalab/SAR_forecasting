@@ -97,8 +97,9 @@ if "${country}${year}" == "BGD2022" {
 foreach incomevar in welfare ila ijubi itranext itranint itranp_ns itranp itrane icap inla_otro inla renta_imp ipcf itf ip inp {
 	cap drop `incomevar'_ppp
 	gen `incomevar'_ppp = `incomevar' / cpi$ppp / icp$ppp
-	replace `incomevar'_ppp = `incomevar'_ppp / 12 if "$country" == "NPL"
-}
+	*replace `incomevar'_ppp = `incomevar'_ppp / 12 if "$country" == "NPL" 
+      replace `incomevar'_ppp = `incomevar'_ppp / 12 if "$country" == "NPL" & "`incomevar'" == "welfare" //added this and commented line above due to changes in INC between v03 and v04
+	}
 
 *replace welfare_ppp = welfare_ppp * 12
 *replace ip_ppp = . if ip < 0

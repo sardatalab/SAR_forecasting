@@ -163,7 +163,7 @@ foreach country of global countries_hhss { // Open loop countries
 		
 
 		* Labor income - skilled/unskilled by sector and total
-		if inlist("`country'","BGD","NPL") qui gen ip_ppp = (ip/12) / cpi${cpi_base} / icp${cpi_base} // Labor income main activity ppp
+		if inlist("`country'","BGD") qui gen ip_ppp = (ip/12) / cpi${cpi_base} / icp${cpi_base} // Labor income main activity ppp
 		else 					qui gen ip_ppp = ip / cpi${cpi_base} / icp${cpi_base} 
 		
 		for any 1 2 3: qui gen ip_sk_X 	 = ip_ppp if sample == 1 & lstatus_year == 1 & sector_3 == X & sk == 1

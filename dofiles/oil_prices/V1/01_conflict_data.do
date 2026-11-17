@@ -33,7 +33,7 @@ foreach country of global countries { // Open loop countries
 	* Loading the data	
 	if "`country'" == "BGD" qui use "${country_path}\BGD_2026_6s_dom_yes_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear
 	
-	else if "`country'" == "MDV" qui use "${country_path}\Postcrisis_covidtransfers\MDV_2026_6s_dom_no_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear
+	else if "`country'" == "MDV" qui use "${country_path}\MDV_2026_6s_dom_no_int_no_inc_no_cons_no_matching_yes_st_yes.dta", clear
 
 	* Variables of interest
 	if "`country'" == "BGD" keep hhid pid code year wgt fexp_* male urban age h_head educat* educy members ipcf ila ila_ppp icap icap_ppp ijubi ijubi_ppp inla_otro inla_otro_ppp itranp itranp_ppp itrane itrane_ppp socialsec emplyd* empstat* industry* active* occupation* renta_imp itf itf_ppp ip ip_ppp inp inp_ppp hogarsec ii itranext_m region marital pc_inc_* sect_main* skill* unskill* unemplyd* active* sect_main6* sectorg* salaried* public_job* lai_* tot_lai* h_* aux_nlai_s  icp* cpi* depen labor_* welfare* new_ratio

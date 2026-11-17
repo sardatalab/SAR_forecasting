@@ -68,7 +68,7 @@ foreach country of global countries {
 	* 2.3. Merge with food shares
 	if "`country'" == "IND" qui merge m:1 hhid using "${path}\Oil prices\food_vectors_SAR/`country'_food_share_2023_s2s", keep(1 3) keepusing(share_food) nogen
 	else if "`country'" == "BTN" qui merge 1:1 hhid pid using "${path}\Oil prices\\food_vectors_SAR/`country'_food_share_2022_s2s", keep(1 3) keepusing(share_food) nogen
-	else if "`country'" == "LKA" qui merge 1:1 hhid pid using "${path}\Oil prices\\food_vectors_SAR/`country'_food_share_2024_s2s", keep(1 3) keepusing(share_food) nogen
+	else if "`country'" == "LKA" qui merge m:1 hhid using "${path}\Oil prices\\food_vectors_SAR/`country'_food_share_2024_s2s", keep(1 3) keepusing(share_food) nogen
 	else qui merge 1:1 hhid pid using "${path}\Oil prices\\food_vectors_SAR/`country'_food_share", keep(1 3) keepusing(share_food) nogen
 
 	*-------------------------------------------------------------------------
@@ -152,7 +152,7 @@ foreach country of global countries {
 	* 4.11  Last Gini Coefficient
 	qui ineqdec0 welfare_s [w=pondera_26]
 	qui gen gini_2 = r(gini)
-	
+
 	* 4.12 Last Poverty and Vulnerability
 	for any 30 42 83 170: qui gen pov_X_2 = welfare_s <= lp_Xusd_ppp if welfare_s != .
 	
@@ -163,6 +163,7 @@ foreach country of global countries {
 	qui destring gap_*, replace
 	ren welfare_s welfare_post
 	
+
 	drop if welfare_pre == . & welfare == . & welfare_post == .
 	
 	*-------------------------------------------------------------------------
